@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isabele Carvalho | Direito Previdenciário</title>
+    <style>
+        :root {
+            --primary-color: #722F37;
+            --secondary-color: #A4343A;
+            --text-color: #333;
+            --background-color: #FFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(114, 47, 55, 0.9);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            padding: 0 1rem;
+        }
+
+        .nav-links a {
+            color: var(--background-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--background-color);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        main {
+            margin-top: 60px;
+        }
+
+        section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            color: var(--background-color);
+            font-size: 1.5rem;
+        }
+
+        .advogada-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            border: 4px solid var(--primary-color);
+        }
+
+        #servicos .servicos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .servico-item {
+            background-color: #f1f1f1;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .servico-item:hover {
+            transform: translateY(-5px);
+            border: var(--primary-color) solid 2px;
+        }
+
+        #sobre {
+            background-color: #f4f4f4;
+        }
+
+        #sobre .container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        #sobre .sobre-texto {
+            flex: 1;
+        }
+
+        #sobre .sobre-imagem {
+            width: 300px;
+            height: 360px;
+            border-radius: 10%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+
+        @media screen and (max-width: 768px) {
+            #sobre .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            #sobre .sobre-imagem {
+                width: 300px;
+                height: 360px;
+                margin-bottom: 1rem;
+            }
+        }
+
+        #contato form {
+            display: grid;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--background-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--background-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary-color);
+        }
+
+        #inicio {
+            text-align: center;
+            padding: 5rem 0;
+            color: #fff;
+            position: relative;
+            background: linear-gradient(rgba(128, 128, 128, 0), rgba(128, 128, 128, 0.9)), url('isabele3.jpg') no-repeat center/cover;
+        }
+
+        #inicio::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Overlay escuro para melhorar a legibilidade do texto */
+        }
+
+        #inicio .container {
+            position: relative;
+            z-index: 1;
+            margin-right: 4%;
+            max-width: 480px;
+        }
+
+        .dynamic-text {
+            font-size: 2rem;
+            font-weight: bold;
+            height: 3rem;
+            overflow: hidden;
+        }
+
+        .dynamic-text span {
+            display: block;
+            height: 100%;
+            animation: slide-up 12s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+        }
+
+        @keyframes slide-up {
+            0%, 12.5% { transform: translateY(0); }
+            25%, 37.5% { transform: translateY(-100%); }
+            50%, 62.5% { transform: translateY(-200%); }
+            75%, 87.5% { transform: translateY(-300%); }
+            100% { transform: translateY(-400%); }
+        }
+
+        #faq {
+            background-color: #f9f9f9;
+            padding: 4rem 0;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 1rem;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #e9e9e9;
+            border: var(--primary-color) solid 2px;
+        }
+
+        .faq-answer {
+            padding: 1rem;
+            display: none;
+        }
+
+        .faq-item.active .faq-question {
+            border: var(--primary-color) solid 2px;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .whatsapp-button {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px rgba(0,0,0,0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .whatsapp-button:hover {
+            background-color: #20ba5a;
+            transform: scale(1.1);
+        }
+
+        .whatsapp-button svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Animação de pulso */
+        .whatsapp-button::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            display: block;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            animation: pulse-border 1.5s ease-out infinite;
+        }
+
+        @keyframes pulse-border {
+            0% {
+                transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .custom-button {
+            display: inline-block;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: transparent;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-button:hover {
+            background: #fff;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .custom-button:active {
+            transform: translateY(0);
+        }
+
+        .custom-button2 {
+            display: inline-block;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            background: #25d366;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-align: center;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-button2:hover {
+            border: 2px solid #25d366;
+            background: #ffffff;
+            color: #25d366;
+            transform: translateY(-2px);
+        }
+
+        /* Versão mobile */
+        @media (max-width: 768px) {
+            .custom-button {
+                padding: 12px 25px;
+                font-size: 15px;
+                background: #fff;
+                color: var(--primary-color);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                right: 0px;
+                height: 92vh;
+                top: 8vh;
+                background-color: var(--primary-color);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 50%;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
+            }
+
+            .nav-links li {
+                opacity: 0;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                font-weight: bold;
+            }
+
+            .burger {
+                display: block;
+            }
+
+            .nav-active {
+                transform: translateX(0%);
+            }
+
+            @keyframes navLinkFade {
+                from {
+                    opacity: 0;
+                    transform: translateX(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0px);
+                }
+            }
+
+            .toggle .line1 {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .toggle .line2 {
+                opacity: 0;
+            }
+
+            .toggle .line3 {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-section {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+
+            .dynamic-text {
+                font-size: 1.5rem;
+            }
+
+            #inicio .container {
+                display: flex;
+                flex-direction: column;
+                margin: 0 auto;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">Dra. Isabele Carvalho</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#contato">Avaliações</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio">
+            <div class="container">
+                <img src="isabele6.JPG" alt="Advogada" class="advogada-img">
+                <h4>Dra. Isabele Carvalho</h4>
+                <p>Especialista em Direito Previdenciário</p>
+                <p>OAB/RJ 243.004</p></br>
+                <div class="dynamic-text">
+                    <span>Protegendo seus direitos</span>
+                    <span>Garantindo seu futuro</span>
+                    <span>Experiência comprovada</span>
+                    <span>Atendimento personalizado</span>
+                    <span>Conte com nossa expertise</span>
+                    
+                </div>
+                <div style="margin-top: 30px; text-align: center;">
+                    <a href="https://wa.me/5524981550736" target="_blank" class="custom-button">
+                        Falar com a Especialista
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="servicos">
+            <div class="container">
+                <h2>Serviços</h2>
+                <div class="servicos-grid">
+                    <div class="servico-item">
+                        <h3>Aposentadoria Urbana</h3>
+                        <p>Voltada aos trabalhadores urbanos, analiso o tempo de contribuição e planejo o melhor benefício para o segurado, acompanhando todo o processo administrativo.</p>
+                    </div>
+                    <div class="servico-item">
+                        <h3>Aposentadoria Rural</h3>
+                        <p>Destinada aos trabalhadores rurais, auxilio na organização da documentação e orientação para garantir o acesso à aposentadoria, considerando seus requisitos específicos.</p>
+                    </div>
+                    <div class="servico-item">
+                        <h3>Pensão por Morte</h3>
+                        <p>Benefício para dependentes de segurados falecidos. Ofereço assessoria na documentação e no pedido ao INSS, assegurando direitos e concessão rápida.</p>
+                    </div>
+                    <div class="servico-item">
+                        <h3>BPC / Loas</h3>
+                        <p>Destinado a idosos e pessoas com deficiência de baixa renda, ofereço assessoria na documentação, orientação jurídica e acompanhamento do processo para garantir o benefício.</p>
+                    </div>
+                    <div class="servico-item">
+                        <h3>Auxílio Doença / Acidente</h3>
+                        <p>Benefício para segurados incapacitados temporariamente por doença ou acidente. Auxilio na orientação e no acompanhamento do processo, desde a análise inicial até recursos.</p>
+                    </div>
+                    <div class="servico-item">
+                        <h3>Salário Maternidade</h3>
+                        <p>Benefício para seguradas durante o afastamento por nascimento, adoção ou guarda de uma criança. Auxilio na análise, documentação e acompanhamento para concessão ágil.</p>
+                    </div>
+
+                </div></br>
+                <div style="margin-top: 30px; text-align: center;">
+                    <a href="https://wa.me/5524981550736" target="_blank" class="custom-button2">
+                        Falar com a Especialista
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre">
+            <div class="container">
+                <img src="isabele4.JPG" alt="Dra. Isabele Carvalho" class="sobre-imagem">
+                <div class="sobre-texto">
+                    <center><h2>Sobre Mim</h2></br>
+                    <p><b>Dra. Isabele Carvalho.
+                    OAB/RJ 243.004.</b></br></br>
+                    Advogada especialista em <b>Direito Previdenciário</b>, formada pela UNIFAA, pós graduada em <b>Direito e Processo Previdenciário</b> pela FACUMINAS.
+                    Especializada em benefícios previdenciários, possuo ampla experiência na defesa dos direitos dos segurados, oferecendo assessoria completa para a concessão de aposentadorias, auxílios e benefícios como o BPC/LOAS. Com dedicação e conhecimento profundo das leis previdenciárias, trabalho para proporcionar um atendimento personalizado e focado nas melhores soluções para cada cliente.</p></center>
+                </div>
+            </div>
+        </section></br>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="https://wa.me/5524981550736" target="_blank" class="custom-button2">
+                Falar com a Especialista
+            </a>
+        </div>
+
+        <section id="contato">
+            <script src="https://static.elfsight.com/platform/platform.js" async></script>
+            <div class="elfsight-app-c906439d-79c6-4fb3-99b8-a6971b48484c" data-elfsight-app-lazy></div></br>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="https://wa.me/5524981550736" target="_blank" class="custom-button2">
+                    Falar com a Especialista
+                </a>
+            </div>
+        </section>
+
+        <section id="faq">
+            <div class="container">
+                <h2>Perguntas Frequentes</h2>
+                <div class="faq-item">
+                    <div class="faq-question">Quem tem direito ao Auxílio-Doença?</div>
+                    <div class="faq-answer">Segurados do INSS que estejam temporariamente incapacitados para o trabalho por motivo de doença ou acidente.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">O que é preciso para solicitar a Aposentadoria Rural?</div>
+                    <div class="faq-answer">Comprovar atividade rural e cumprir requisitos de idade e tempo, com documentos específicos.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Quem pode receber o Benefício de Prestação Continuada (BPC/LOAS)?</div>
+                    <div class="faq-answer">Idosos com 65 anos ou mais e pessoas com deficiência de baixa renda, sem a exigência de contribuição ao INSS.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Como funciona o Salário-Maternidade?</div>
+                    <div class="faq-answer">É um benefício para seguradas do INSS durante o afastamento por nascimento, adoção ou guarda de uma criança.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Quem pode pedir a Pensão por Morte?</div>
+                    <div class="faq-answer">Dependentes do segurado falecido, como cônjuge, filhos e outros dependentes previstos na lei. O pedido pode ser feito a qualquer momento, mas é importante solicitar o quanto antes para garantir o benefício retroativo.</div>
+                </div>
+            </div>
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="https://wa.me/5524981550736" target="_blank" class="custom-button2">
+                    Falar com a Especialista
+                </a>
+            </div>
+        </section>
+
+        <a href="https://wa.me/5524981550736?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta" 
+        class="whatsapp-button" 
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat on WhatsApp">
+            <svg fill="#ffffff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+        </a>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Dra. Isabele Carvalho</h4>
+                    <p>Email: contato@advogada.com</p>
+                    <p>Telefone: (24) 98155-0736</p>
+                </div>
+                
+            </div>
+            <p>&copy; 2024 - Peanuts Software Development. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <script>
+        // Navegação responsiva
+        const navSlide = () => {
+            const burger = document.querySelector('.burger');
+            const nav = document.querySelector('.nav-links');
+            const navLinks = document.querySelectorAll('.nav-links li');
+
+            burger.addEventListener('click', () => {
+                nav.classList.toggle('nav-active');
+
+                navLinks.forEach((link, index) => {
+                    if (link.style.animation) {
+                        link.style.animation = '';
+                    } else {
+                        link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                    }
+                });
+
+                burger.classList.toggle('toggle');
+            });
+        }
+
+        navSlide();
+
+        // Efeito de rolagem na navbar
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('scrolled', window.scrollY > 0);
+        });
+
+        // Animação de entrada das seções
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Funcionalidade para o FAQ
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+                // Importando a biblioteca ScrollReveal
+        const sr = ScrollReveal({
+            origin: 'top',
+            distance: '80px',
+            duration: 2000,
+            reset: true     
+        });
+
+        // Revelação da seção de serviços
+        sr.reveal('#servicos h2', {});
+        sr.reveal('.servico-item', { 
+            interval: 200,
+            origin: 'left'
+        });
+
+        // Revelação da seção sobre
+        sr.reveal('#sobre h2', {});
+        sr.reveal('#sobre .container', { 
+            delay: 200,
+            origin: 'right'
+        });
+
+        // Revelação da seção FAQ
+        //sr.reveal('#faq h2', {});
+       // sr.reveal('.faq-item', { 
+        //    interval: 200,
+        //    origin: 'bottom'
+       // });
+
+        // Navegação suave ao clicar nos links do menu
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
